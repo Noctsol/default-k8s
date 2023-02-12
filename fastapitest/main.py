@@ -7,12 +7,6 @@ pip install uvicorn
 docker build -t fastapitest .
 docker run -d --name mycontainer -p 8000:8000 -t noctsol/fastapitest:00.02
 
-
-/docs   for default swagger doc
-
-
-
-
 """
 from typing import Union
 

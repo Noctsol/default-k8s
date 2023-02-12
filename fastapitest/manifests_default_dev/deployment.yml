@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: myfastapitest
-        image: myfastapitest:latest
+        image: myfastapitest:00:02
         #only set this to nbever if you want to use images you build locally
         imagePullPolicy: Always
         resources:
