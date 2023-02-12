@@ -16,3 +16,10 @@
     - If you have a Dockerfile names something other than **Dockerfile**, you will need to specify the filename with the -f argumeent
 4. docker run -d --name mycontainer -p 8000:8000 -t {yourusername}/fastapitest:{tag}
     - example: **docker run -d --name mycontainer -p 8000:8000 -t noctsol/fastapitest:00.03**
+
+
+# Deploying to kubernetes using normal manifests file
+kubectl apply -f fastapitest\manifests_default_dev\namespace.yml
+kubectl apply -f fastapitest\manifests_default_dev\configmap.yml
+kubectl apply -f fastapitest\manifests_default_dev\deployment.yml
+kubectl apply -f fastapitest\manifests_default_dev\service.yml
