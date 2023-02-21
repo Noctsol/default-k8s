@@ -1,19 +1,35 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: fastapitest-deployment
+#   labels:
+#     app: myfastapiapp
+# spec:
+#   selector:
+#     matchLabels:
+#       app: myfastapiapp
+#   replicas: 2
+#   template:
+#     metadata:
+#       labels:
+#         environment: dev
+#         app: myfastapiapp
+#     spec:
+#       containers:
+#       - name: myfastapitest
+#         image: noctsol/fastapitest:00.02
+#         resources:
+#           limits:
+#             memory: "400Mi"
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fastapitest-deployment
-  namespace: dev
-  labels:
-    app: myfastapiapp
 spec:
-  selector:
-    matchLabels:
-      app: myfastapiapp
   replicas: 2
   template:
     metadata:
       labels:
-        environment: dev
         app: myfastapiapp
     spec:
       containers:

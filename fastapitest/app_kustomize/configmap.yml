@@ -2,8 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: fastapitest-configmap
-  namespace: null
   labels:
     app: myfastapiapp
 data:
-  env: replaceme
+  env: weee

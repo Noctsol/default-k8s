@@ -2,8 +2,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: fastapitest-configmap
-  namespace: dev
   labels:
     app: myfastapiapp
 data:
   env: dev
+  woot: thing

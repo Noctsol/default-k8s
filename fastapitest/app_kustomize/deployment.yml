@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fastapitest-deployment
-  namespace: null
   labels:
     app: myfastapiapp
 spec:
@@ -13,7 +12,7 @@ spec:
   template:
     metadata:
       labels:
-        environment: null
+        # environment: dev
         app: myfastapiapp
     spec:
       containers:
