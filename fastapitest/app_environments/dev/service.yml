@@ -1,8 +1,8 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: dev-fastapitest-service
-  namespace: dev-fastapitest
+  name: fastapitest-service
+  namespace: dev
   labels:
     app: myfastapiapp
 spec:
@@ -11,5 +11,5 @@ spec:
   type:  LoadBalancer
   ports:
   - name:  http
-    port:  8000
+    port:  49152
     targetPort:  8000

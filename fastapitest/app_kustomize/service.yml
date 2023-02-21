@@ -1,8 +1,8 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: dev-fastapitest-service
-  namespace: dev-fastapitest
+  name: fastapitest-service
+  namespace: null
   labels:
     app: myfastapiapp
 spec:

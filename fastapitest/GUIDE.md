@@ -19,7 +19,11 @@
 
 
 # Deploying to kubernetes using normal manifests file
-kubectl apply -f fastapitest\manifests_default_dev\namespace.yml
-kubectl apply -f fastapitest\manifests_default_dev\configmap.yml
-kubectl apply -f fastapitest\manifests_default_dev\deployment.yml
-kubectl apply -f fastapitest\manifests_default_dev\service.yml
+kubectl apply -f ./fastapitest/manifests_default_dev/namespace.yml
+kubectl apply -f ./fastapitest/manifests_default_dev/configmap.yml
+kubectl apply -f ./fastapitest/manifests_default_dev/deployment.yml
+kubectl apply -f ./fastapitest/manifests_default_dev/service.yml
+
+
+# Deploy to kubernetes using kustomization
+kubectl apply -k ./fastapitest/app_environments/dev

@@ -1,0 +1,12 @@
+bases:
+  - ../../app_kustomize
+patches:
+  - namespace.yml
+  - configmap.yml
+  - deployment.yml
+  - service.yml
+# resources:
+#   - namespace.yml
+#   - configmap.yml
+#   - deployment.yml
+#   - service.yml

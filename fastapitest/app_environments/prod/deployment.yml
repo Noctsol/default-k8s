@@ -1,26 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dev-fastapitest-deployment
-  namespace: dev-fastapitest
+  name: prod-fastapitest-deployment
+  namespace: prod-fastapitest
   labels:
     app: myfastapiapp
 spec:
   selector:
     matchLabels:
       app: myfastapiapp
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
-        environment: dev
+        environment: prod
         app: myfastapiapp
     spec:
       containers:
       - name: myfastapitest
         image: noctsol/fastapitest:00.02
-        #only set this to nbever if you want to use images you build locally
-        imagePullPolicy: Always
         resources:
           limits:
-            memory: "500Mi"
+            memory: "550Mi"
