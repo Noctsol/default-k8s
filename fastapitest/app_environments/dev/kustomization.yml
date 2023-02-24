@@ -12,6 +12,7 @@ patches:
   - configmap.yml
   - deployment.yml
   - service.yml
+  - ingress.yml
 # resources:
 #   - namespace.yml
 #   - configmap.yml
