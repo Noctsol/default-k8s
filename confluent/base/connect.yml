@@ -1,0 +1,32 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Connect
+metadata:
+  name: connect
+spec:
+  replicas: 2
+  image:
+    application: confluentinc/cp-server-connect:latest
+    init: confluentinc/confluent-init-container:latest
+  build:
+    type: onDemand
+    onDemand:
+      plugins:
+        locationType: confluentHub
+        confluentHub:
+          - name: kafka-connect-elasticsearch
+            owner: confluentinc
+            version: latest
+          - name: kafka-connect-mongodb
+            owner: confluentinc
+            version: latest
+      storageLimit: 4G
+  authentication:
+    type: basic
+    basic:
+      secretRef: kafkacluster-secrets
+  mountedSecrets:
+    - secretRef: mongo-secrets
+    - secretRef: elastic-secrets
+  dependencies:
+    kafka:
+      bootstrapEndpoint: lkc-7y2j9j-g00qyg.eastus2.azure.glb.confluent.cloud:9092

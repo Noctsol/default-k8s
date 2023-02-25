@@ -1,0 +1,29 @@
+apiVersion: platform.confluent.io/v1beta1
+kind: Connector
+metadata:
+  name: s3-source-demo
+  namespace: confluent
+spec:
+  name: connector
+  # You can get this from
+  # https://docs.confluent.io/cloud/current/connectors/cc-s3-source.html#step-3-create-the-connector-configuration-file
+  # https://docs.confluent.io/kafka-connectors/s3-source/current/generalized/overview.html#troubleshooting-connector-and-task-failures
+  class: "io.confluent.connect.s3.source.S3SourceConnector"
+  taskMax: 4
+  configs:
+    value.converter: "org.apache.kafka.connect.json.JsonConverter"
+    mode: "GENERIC"
+    format.class: "io.confluent.connect.s3.format.json.JsonFormat"
+    topic.regex.list: "quick-start-topic:.*"
+    s3.bucket.name: "demo-bucket"
+    s3.region: "us-west-2"
+    value.converter.schemas.enable: "false"
+    aws.access.key.id: "${file:/mnt/secrets/aws-credential/aws.txt:aws_access_key_id}"
+    aws.secret.access.key: "${file:/mnt/secrets/aws-credential/aws.txt:aws_secret_access_key}"
+  connectRest:
+    authentication:
+      type: basic
+      basic:
+        secretRef: connector-basic
+
+---
