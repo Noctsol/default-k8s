@@ -6,4 +6,4 @@ commonLabels:
 resources:
 - namespace.yml
 bases:
-  - ../../base
+  - ../base

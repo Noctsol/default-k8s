@@ -9,6 +9,6 @@ spec:
     app:  myfastapiapp
   type:  LoadBalancer
   ports:
-  - name:  http49152
-    port:  80
+  - name:  http
+    port:  8001
     targetPort:  8000

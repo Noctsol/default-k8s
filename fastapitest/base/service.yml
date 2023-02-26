@@ -7,11 +7,8 @@ metadata:
 spec:
   selector:
     app:  myfastapiapp
-  # type:  LoadBalancer
+  type:  LoadBalancer
   ports:
   - name:  http
-    port:  80
-    targetPort:  8000
-  - name:  https
-    port:  443
+    port:  8001
     targetPort:  8000

@@ -1,21 +1,21 @@
-Link ref: https://argo-cd.readthedocs.io/en/stable/getting_started/
+# How to install my way on minikube
+
+- Link ref: https://argo-cd.readthedocs.io/en/stable/getting_started/
+
+1. Go to https://github.com/argoproj/argo-cd/blob/master/manifests/install.yaml
+    - Download that file
+    - Ctrl F the argocd-server service and edit it however you want. I made it a load balancer and chose a port
+2. Make yaml file for creating the argocd namespace
+3. Make an ingress and decide how you want to access
+4. Are your custom host to C:\Windows\System32\drivers\etc\hosts
+    - 127.0.0.1 yourhostname
+5. Get your secret for the admin account
+    - kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+5. Run minikube tunnel
+6. Navigate to http:{yourhost}:{yourport}
 
 
-# Install
-kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/core-install.yaml
-# Expose externally
-kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+# Install from this repo
+kubectl apply -k ./argocd/overlay
 
-
-# Install CLI
-curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
-sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
-rm argocd-linux-amd64
-
-
-
-kubectl apply -f ./argocd
-
-
-kubectl apply -k .argocd/overlay
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d

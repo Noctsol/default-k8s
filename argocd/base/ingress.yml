@@ -14,17 +14,17 @@ spec:
               service:
                 name: argocd-server
                 port:
-                  number: 80
+                  number: 8000
             path: /
             pathType: "Prefix"
-          - backend:
-              service:
-                name: argocd-server
-                port:
-                  number: 443
-            path: /
-            pathType: "Prefix"
-  tls:
-    - hosts:
-        - argocd.noctsol.test
-      secretName: noctsol-cert-tls
+          # - backend:
+          #     service:
+          #       name: argocd-server
+          #       port:
+          #         number: 443
+          #   path: /
+          #   pathType: "Prefix"
+  # tls:
+  #   - hosts:
+  #       - argocd.noctsol.test
+  #     secretName: argo-cert-tls
