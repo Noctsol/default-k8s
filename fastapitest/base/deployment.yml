@@ -12,13 +12,12 @@ spec:
   template:
     metadata:
       labels:
-        # environment: dev
         app: myfastapiapp
     spec:
       containers:
       - name: myfastapitest
         image: noctsol/fastapitest:00.02
-        #only set this to never if you want to use images you build locally
+        # Only set this to never if you want to use images you build locally
         imagePullPolicy: Always
         resources:
           limits:

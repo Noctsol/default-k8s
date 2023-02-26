@@ -26,4 +26,4 @@ kubectl apply -f ./fastapitest/manifests_default_dev/service.yml
 
 
 # Deploy to kubernetes using kustomization
-kubectl apply -k ./fastapitest/app_environments/dev
+kubectl apply -k ./fastapitest/overlay/dev

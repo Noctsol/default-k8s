@@ -4,6 +4,9 @@ metadata:
   name: ingress
   annotations:
     cert-manager.io/cluster-issuer: selfsigned-issuer
+    # optional allow max file upload size 100M
+    # nginx.ingress.kubernetes.io/client-body-buffer-size: 100M
+    # nginx.ingress.kubernetes.io/proxy-body-size: 100M
 spec:
   rules:
     - host: dev.noctsol.test
@@ -11,16 +14,9 @@ spec:
         paths:
           - backend:
               service:
-                name: fastapitest-service
+                name: dev-fastapitest-service
                 port:
                   number: 80
-            path: /
-            pathType: "Prefix"
-          - backend:
-              service:
-                name: fastapitest-service
-                port:
-                  number: 443
             path: /
             pathType: "Prefix"
   tls:
