@@ -1,32 +1,80 @@
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: Zookeeper
+metadata:
+  name: zookeeper
+  namespace: confluent
+spec:
+  license:
+    globalLicense: true
+  replicas: 1
+  image:
+    application: confluentinc/cp-zookeeper:7.3.2
+    init: confluentinc/confluent-init-container:2.5.1
+  dataVolumeCapacity: 10Gi
+  logVolumeCapacity: 10Gi
+---
+apiVersion: platform.confluent.io/v1beta1
+kind: Kafka
+metadata:
+  name: kafka
+  namespace: confluent
+spec:
+  replicas: 1
+  image:
+    application: confluentinc/cp-server:7.3.2
+    init: confluentinc/confluent-init-container:2.5.1
+  dataVolumeCapacity: 10Gi
+  metricReporter:
+     enabled: true
+---
 apiVersion: platform.confluent.io/v1beta1
 kind: Connect
 metadata:
   name: connect
 spec:
-  replicas: 2
+  # podTemplate:
+  #   resources:
+  #     requests:
+  #       cpu: 2000m
+  #       memory: 8Gi
+  replicas: 1
   image:
-    application: confluentinc/cp-server-connect:latest
-    init: confluentinc/confluent-init-container:latest
+    application: confluentinc/cp-server-connect:7.3.2
+    init: confluentinc/confluent-init-container:2.5.1
   build:
     type: onDemand
     onDemand:
       plugins:
         locationType: confluentHub
         confluentHub:
-          - name: kafka-connect-elasticsearch
-            owner: confluentinc
-            version: latest
+          # - name: kafka-connect-elasticsearch
+          #   owner: confluentinc
+          #   version: latest
           - name: kafka-connect-mongodb
-            owner: confluentinc
-            version: latest
+            owner: mongodb
+            version: 1.9.1
       storageLimit: 4G
   authentication:
     type: basic
     basic:
-      secretRef: kafkacluster-secrets
+      secretRef: kafka-creds
   mountedSecrets:
-    - secretRef: mongo-secrets
-    - secretRef: elastic-secrets
+    - secretRef: mongo-creds
+    - secretRef: elastic-creds
+  # probe:
+  #   liveness:
+  #     periodSeconds: 10
+  #     failureThreshold: 5
+  #     timeoutSeconds: 500
   dependencies:
     kafka:
-      bootstrapEndpoint: lkc-7y2j9j-g00qyg.eastus2.azure.glb.confluent.cloud:9092
+      bootstrapEndpoint: pkc-mz3gw.westus3.azure.confluent.cloud:9092
+      authentication:
+        type: plain
+        jaasConfig:
+          secretRef: kafka-creds
+      tls:
+        enabled: true
+        ignoreTrustStoreConfig: true
+

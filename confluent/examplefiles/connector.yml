@@ -6,7 +6,7 @@ metadata:
 spec:
   name: connector
   class: "io.confluent.connect.s3.source.S3SourceConnector"
-  taskMax: 4
+  taskMax: 1
   configs:
     value.converter: "org.apache.kafka.connect.json.JsonConverter"
     mode: "GENERIC"
