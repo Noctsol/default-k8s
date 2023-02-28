@@ -4,6 +4,14 @@ metadata:
   name: mongo-source-connector
   namespace: confluent
 spec:
+  # podTemplate:
+  #   resources:
+  #     limits:
+  #       cpu: "500m"
+  #       memory: "1Gi"
+  #     requests:
+  #       cpu: "100m"
+  #       memory: "512Mi"
   name: connector
   class: "MongoDbAtlasSource"
   taskMax: 4

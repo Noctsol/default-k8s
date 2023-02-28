@@ -1,32 +1,32 @@
----
-apiVersion: platform.confluent.io/v1beta1
-kind: Zookeeper
-metadata:
-  name: zookeeper
-  namespace: confluent
-spec:
-  license:
-    globalLicense: true
-  replicas: 1
-  image:
-    application: confluentinc/cp-zookeeper:7.3.2
-    init: confluentinc/confluent-init-container:2.5.1
-  dataVolumeCapacity: 10Gi
-  logVolumeCapacity: 10Gi
----
-apiVersion: platform.confluent.io/v1beta1
-kind: Kafka
-metadata:
-  name: kafka
-  namespace: confluent
-spec:
-  replicas: 1
-  image:
-    application: confluentinc/cp-server:7.3.2
-    init: confluentinc/confluent-init-container:2.5.1
-  dataVolumeCapacity: 10Gi
-  metricReporter:
-     enabled: true
+# ---
+# apiVersion: platform.confluent.io/v1beta1
+# kind: Zookeeper
+# metadata:
+#   name: zookeeper
+#   namespace: confluent
+# spec:
+#   license:
+#     globalLicense: true
+#   replicas: 1
+#   image:
+#     application: confluentinc/cp-zookeeper:7.3.2
+#     init: confluentinc/confluent-init-container:2.5.1
+#   dataVolumeCapacity: 10Gi
+#   logVolumeCapacity: 10Gi
+# ---
+# apiVersion: platform.confluent.io/v1beta1
+# kind: Kafka
+# metadata:
+#   name: kafka
+#   namespace: confluent
+# spec:
+#   replicas: 1
+#   image:
+#     application: confluentinc/cp-server:7.3.2
+#     init: confluentinc/confluent-init-container:2.5.1
+#   dataVolumeCapacity: 10Gi
+#   metricReporter:
+#      enabled: true
 ---
 apiVersion: platform.confluent.io/v1beta1
 kind: Connect
@@ -38,10 +38,28 @@ spec:
   #     requests:
   #       cpu: 2000m
   #       memory: 8Gi
+  # resources:
+  # limits:
+  #   memory: "500Mi"
   replicas: 1
   image:
     application: confluentinc/cp-server-connect:7.3.2
     init: confluentinc/confluent-init-container:2.5.1
+  podTemplate:
+    resources:
+      limits:
+        cpu: "500m"  #.1 -> 100m - >one hundred milli CPU
+        memory: "1Gi"
+      requests:
+        cpu: "100m"
+        memory: "512Mi"
+      # configOverrides:
+      #   server:
+      #     - auto.create.topics.enable=true
+      # jvm:
+      #   - "-Xmx6g"                # Set to 6 GB
+      #   - "-XX:MetaspaceSize=96m"
+      #   - "-XX:+UseG1GC"
   build:
     type: onDemand
     onDemand:
