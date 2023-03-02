@@ -23,11 +23,15 @@ These actually show more options and how to structure the manifests yaml
 - https://github.com/confluentinc/confluent-kubernetes-examples/blob/5a2a373bc0a39bf62193c19a7953df0655570b46/connector/replicator-source-connector/confluent-platform-destination.yaml
 - https://github.com/confluentinc/confluent-kubernetes-examples/blob/5a2a373bc0a39bf62193c19a7953df0655570b46/security/plaintext-basic-auth-ConnectAndSchemaRegistry/confluent-platform.yaml
 - https://github.com/confluentinc/confluent-kubernetes-examples/blob/5a2a373bc0a39bf62193c19a7953df0655570b46/networking/external-access-load-balancer-deploy/confluent-platform.yaml
+
+##### Contains TLS Certs
+
 - https://github.com/confluentinc/confluent-kubernetes-examples/blob/5a2a373bc0a39bf62193c19a7953df0655570b46/security/openshift-security/confluent-platform-with-defaultSCC.yaml
 - https://github.com/confluentinc/confluent-kubernetes-examples/blob/5a2a373bc0a39bf62193c19a7953df0655570b46/networking/external-access-nodeport-deploy/confluent-platform.yaml
 - https://github.com/confluentinc/confluent-kubernetes-examples/blob/5a2a373bc0a39bf62193c19a7953df0655570b46/security/configure-with-vault/rbac/confluent-platform-withrbac-vault.yaml
 - https://github.com/confluentinc/confluent-kubernetes-examples/blob/5a2a373bc0a39bf62193c19a7953df0655570b46/security/configure-with-vault/confluent-platform-norbac-vault.yaml
 - https://github.com/confluentinc/confluent-kubernetes-examples/blob/5a2a373bc0a39bf62193c19a7953df0655570b46/security/production-secure-deploy/confluent-platform-production-mtls.yaml
+
 ### Contains jvm override
 - https://github.com/confluentinc/confluent-kubernetes-examples/blob/5a2a373bc0a39bf62193c19a7953df0655570b46/hybrid/replicator-source-ccloud-destCFK-tls/components-destination.yaml
 
@@ -84,7 +88,7 @@ https://github.com/confluentinc/confluent-kubernetes-examples/blob/0f99bc7f3aaa7
 
 
 kubectl logs -f connect-0 -c config-init-container
-
+kubectl logs -f connect-0
 kubectl apply -k confluent/overlays/
 
 [ERROR] 2023-02-27 05:50:07,995 [main] org.apache.kafka.connect.cli.ConnectDistributed main - Stopping due to error

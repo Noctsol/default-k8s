@@ -37,4 +37,8 @@ spec:
       basic:
         secretRef: kafka-creds
 
+# connector class
+# com.mongodb.kafka.connect.MongoSinkConnector
+# com.mongodb.kafka.connect.MongoSourceConnector
+
 ---

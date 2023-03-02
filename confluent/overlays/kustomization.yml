@@ -4,6 +4,6 @@ namespace: confluent
 commonLabels:
   environment: confluent
 resources:
-- secret.yml
+- secrets.yml
 bases:
   - ../base

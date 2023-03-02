@@ -131,3 +131,5 @@ dmypy.json
 *mysqldata*
 
 confluent/.secrets
+
+confluent/overlays/secrets.yml
