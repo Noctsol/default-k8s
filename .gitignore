@@ -133,3 +133,4 @@ dmypy.json
 confluent/.secrets
 
 confluent/overlays/secrets.yml
+confluent/base/connector.yml

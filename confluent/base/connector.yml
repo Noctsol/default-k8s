@@ -1,41 +1,77 @@
+# https://www.mongodb.com/docs/kafka-connector/current/source-connector/configuration-properties/output-format/
 apiVersion: platform.confluent.io/v1beta1
 kind: Connector
 metadata:
   name: mongo-source-connector
   namespace: confluent
 spec:
-  # podTemplate:
-  #   resources:
-  #     limits:
-  #       cpu: "500m"
-  #       memory: "1Gi"
-  #     requests:
-  #       cpu: "100m"
-  #       memory: "512Mi"
+
   name: connector
-  class: "MongoDbAtlasSource"
+  class: "com.mongodb.kafka.connect.MongoSourceConnector"
+  connectClusterRef:
+    name: connect
   taskMax: 4
   configs:
-    # name: "<my-connector-name>"
-    kafka.auth.mode: "KAFKA_API_KEY"
-    kafka.api.key: "REPLACEME"
-    kafka.api.secret: "REPLACEME"
-    topic.prefix: "k8smongo-"
-    connection.host: "REPLACEME"
-    connection.user: "REPLACEME"
-    connection.password": "REPLACEME"
-    database: "test"
+    connector.class: "com.mongodb.kafka.connect.MongoSourceConnector"
+
+    ### Mongo props
+    connection.uri: "mongodb+srv://mongoadmin:${file:/mnt/secrets/mongo-secrets/credentials.txt:password}@devmongo.wfyvyof.mongodb.net/?retryWrites=true&w=majority"
+    database: test
     collection: "fromk8s"
+    # server.api.version: ""
+    # server.api.deprecationErrors: false
+    # server.api.strict: false
+
+    ### kafka props
+    topic.prefix: "itworks"
+    topic.suffix: "dude"
+    topic.separator: "."
+    # topic.mapper: com.mongodb.kafka.connect.source.topic.mapping.DefaultTopicMapper
+
+    ### Change stream props
+    # If you want to output DB changes to a topic
+    # topic.namespace.map: {"*": "topicThree"}
+    # pipeline: []
+    # change.stream.full.document: ""
+    # change.stream.full.document.before.change: ""
+    # publish.full.document.only: false
+    # publish.full.document.only.tombstones.on.delete: ""
+    # collation: ""
+    batch.size: "0"
     poll.await.time.ms: "5000"
     poll.max.batch.size: "1000"
-    copy.existing: "true"
-    output.data.format: "JSON"
-    tasks.max: "1"
-  connectRest:
-    authentication:
-      type: basic
-      basic:
-        secretRef: kafka-creds
+
+    ### output format
+    # output.format.key: json
+    # output.format.value: json
+    output.json.formatter: "com.mongodb.kafka.connect.source.json.formatter.SimplifiedJson"
+    # output.schema.key: ????
+    # output.schema.value: ????
+    # output.schema.value: ??
+    # output.schema.infer.value: ???
+
+    ### Start up properties
+    # startup.mode: latest
+    # startup.mode.timestamp.start.at.operation.time: ""
+    # startup.mode.copy.existing.namespace.regex: ""
+    # startup.mode.copy.existing.pipeline: ""
+    # startup.mode.copy.existing.max.threads: ""
+    # tartup.mode.copy.existing.queue.size: ""
+    # startup.mode.copy.existing.allow.disk.use: ""
+
+    # Error handling
+    # mongo.errors.tolerance: "none"
+    mongo.errors.log.enable: "true"
+    # mongo.errors.deadletterqueue.topic.name: ""
+    # offset.partition.name: ""
+    # heartbeat.interval.ms: 0
+    # heartbeat.topic.name: __mongodb_heartbeats
+#### managed
+    # authentication:
+    #   type: basic
+    #   basic:
+    #     secretRef: kafka-creds
+
 
 # connector class
 # com.mongodb.kafka.connect.MongoSinkConnector

@@ -42,11 +42,11 @@ spec:
             owner: mongodb
             version: 1.9.1
       storageLimit: 4G
-  # This is the auth to cluster that actual connectors themselves will use?
-  authentication:
-    type: basic
-    basic:
-      secretRef: kafka-cluster-secret
+  # DO NOT USE this makes auth required to your local connect cluster
+  # authentication:
+  #   type: basic
+  #   basic:
+  #     secretRef: kafka-cluster-secret
   mountedSecrets:
     - secretRef: mongo-secrets
     - secretRef: elastic-secrets
