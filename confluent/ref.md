@@ -88,7 +88,11 @@ https://github.com/confluentinc/confluent-kubernetes-examples/blob/0f99bc7f3aaa7
 
 
 kubectl logs -f connect-0 -c config-init-container
-kubectl logs -f connect-0
+kubectl logs -f connect-0 --tail=100
+kubectl logs -f connect-0 --since=1h
+
+
+--since=1h
 kubectl apply -k confluent/overlays/
 
 [ERROR] 2023-02-27 05:50:07,995 [main] org.apache.kafka.connect.cli.ConnectDistributed main - Stopping due to error

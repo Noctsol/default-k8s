@@ -21,6 +21,11 @@ spec:
     # server.api.version: ""
     # server.api.deprecationErrors: false
     # server.api.strict: false
+    key.converter: org.apache.kafka.connect.storage.StringConverter
+    value.converter: org.apache.kafka.connect.storage.StringConverter
+    # value.converter.schemas.enable: "false"
+    change.stream.full.document: updateLookup
+    publish.full.document.only: "false"
 
     ### kafka props
     topic.prefix: "itworks"
@@ -40,11 +45,12 @@ spec:
     batch.size: "0"
     poll.await.time.ms: "5000"
     poll.max.batch.size: "1000"
+    errors.tolerance: all
 
     ### output format
     # output.format.key: json
-    # output.format.value: json
-    output.json.formatter: "com.mongodb.kafka.connect.source.json.formatter.SimplifiedJson"
+    output.format.value: json
+    output.json.formatter: "com.mongodb.kafka.connect.source.json.formatter.DefaultJson"
     # output.schema.key: ????
     # output.schema.value: ????
     # output.schema.value: ??
