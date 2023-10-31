@@ -1,5 +1,9 @@
-# test-k8s
-Repo containing stuff used to learn k8s. If you're anything like and you were lost and you just do better learning on your own over following a course this might be helpful.
+# default-k8s
+Contains the following:
+- Stuff I spam for various projects: argocd, prometheus, etc
+- Examples of building containers for various coding languages with varying set ups and pushing them to kubertnetes
+- Beginner Friendly Stuff
+- A guide on how to set up minikube. I use a WSL & windows set up.
 
 
 # Things you need to install
