@@ -6,3 +6,6 @@ Gets deployed to its own namespace
 
 
 kubectl apply -f ingress
+
+
+kubectl apply -f test-ingress

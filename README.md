@@ -24,3 +24,8 @@ Here's some scenarios:
 
 This is is a hard question to answer if you don't have any prebuilt concepts. If you don't know anything keep learning. At this point in my career, I've learned so many new things that I just trust the process. I will spend a week going something like "???" and then wake up one morning and new concepts will have formulated inside my head. TRUST THE DAMN PROCESS. Choose something small and specific to do and see it through and stuff will eventually make it sense.
 
+
+
+Links
+- https://superuser.com/questions/1126721/rebooting-ubuntu-on-windows-without-rebooting-windows
+- https://minikube.sigs.k8s.io/docs/handbook/addons/ingress-dns/
