@@ -18,20 +18,25 @@ if ($oldPath.Split(';') -inotcontains 'C:\minikube'){
 
 2. Enable addons
 ```shell
-# minikube addons enable ingress
-# minikube addons enable ingress-dns
+minikube addons enable ingress
+minikube addons enable ingress-dns
 minikube addons enable dashboard
 
 # To list all of them
 minikube addons list
 ```
+3. Set up ingress
+```shell
+Add-DnsClientNrptRule -Namespace ".test" -NameServers "$(minikube ip)"
+Get-DnsClientNrptRule | Where-Object {$_.Namespace -eq '.test'} | Remove-DnsClientNrptRule -Force; Add-DnsClientNrptRule -Namespace ".test" -NameServers "$(minikube ip)"
+```
 
-2. Run
+4. Run
 ```shell
 minikube start
 ```
 
-3. (Optional) If you see something like the following
+5. (Optional) If you see something like the following
     - Kubernetes 1.27.4 is now available. If you would like to upgrade, specify: --kubernetes-version=v1.27.4
         - run ```minikube start --kubernetes-version={recommended_version}```
     - Image was not built for the current minikube version. To resolve this you can delete and recreate your minikube cluster using the latest images. Expected minikube version: v1.29.0 -> Actual minikube version: v1.31.2

@@ -61,6 +61,18 @@ spec:
                 name: hello-world-app
                 port:
                   number: 80
+    - host: noctsol.env.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dev-fastapitest-service
+                port:
+                  number: 80
+
+            # pathType: "Prefix"
 ---
 apiVersion: v1
 kind: Service
