@@ -25,8 +25,11 @@ minikube addons enable dashboard
 # To list all of them
 minikube addons list
 ```
-3. Set up ingress
+3. Set up ingress. Were setting it up to auto pick up anything under the .localtest domain
 ```shell
+Add-DnsClientNrptRule -Namespace ".localtest" -NameServers "$(minikube ip)"
+Get-DnsClientNrptRule | Where-Object {$_.Namespace -eq '.localtest'} | Remove-DnsClientNrptRule -Force; Add-DnsClientNrptRule -Namespace ".localtest" -NameServers "$(minikube ip)"
+
 Add-DnsClientNrptRule -Namespace ".test" -NameServers "$(minikube ip)"
 Get-DnsClientNrptRule | Where-Object {$_.Namespace -eq '.test'} | Remove-DnsClientNrptRule -Force; Add-DnsClientNrptRule -Namespace ".test" -NameServers "$(minikube ip)"
 ```
