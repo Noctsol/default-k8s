@@ -33,47 +33,6 @@ spec:
           ports:
             - containerPort: 8080
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: example-ingress
-  namespace: kube-system
-spec:
-  ingressClassName: nginx
-  rules:
-    - host: hello-john.test
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: hello-world-app
-                port:
-                  number: 80
-    - host: hello-jane.test
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: hello-world-app
-                port:
-                  number: 80
-    - host: noctsol.env.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: dev-fastapitest-service
-                port:
-                  number: 80
-
-            # pathType: "Prefix"
----
 apiVersion: v1
 kind: Service
 metadata:
@@ -98,3 +57,112 @@ spec:
   type: LoadBalancer
   selector:
     app: hello-world-app
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-app2
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: hello-world-app2
+  template:
+    metadata:
+      labels:
+        app: hello-world-app2
+    spec:
+      containers:
+        - name: hello-world-app
+          image: gcr.io/google-samples/hello-app:1.0
+          ports:
+            - containerPort: 8080
+---
+          
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-world-app2
+  namespace: kube-system
+spec:
+  type: ExternalName
+  externalName: hello-world-app2.default.svc.cluster.local
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-world-app2
+  namespace: default
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+      protocol: TCP
+  # type: NodePort
+  type: LoadBalancer
+  selector:
+    app: hello-world-app2
+
+
+
+
+
+
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-ingress
+  namespace: kube-system
+  annotations:
+    nginx.org/proxy-connect-timeout: 3600s
+    nginx.org/proxy-read-timeout: 3600s
+    nginx.org/proxy-send-timeout: 3600s
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: hello.test
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hello-world-app
+                port:
+                  number: 80
+    - host: hello2.test
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hello-world-app2
+                port:
+                  number: 80
+    - host: fastapi.test
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dev-fastapitest-service
+                port:
+                  number: 8001
+
+            # pathType: "Prefix"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dev-fastapitest-service
+  namespace: kube-system
+spec:
+  type: ExternalName
+  externalName: dev-fastapitest-service.dev.svc.cluster.local

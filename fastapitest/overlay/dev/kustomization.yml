@@ -6,11 +6,10 @@ commonLabels:
   environment: dev
 resources:
 - namespace.yml
-bases:
-  - ../../base
+- ../../base
 patches:
-  - configmap.yml
-  - deployment.yml
+  - path: configmap.yml
+  - path: deployment.yml
   # - ingress.yml
   # - service.yml
 
