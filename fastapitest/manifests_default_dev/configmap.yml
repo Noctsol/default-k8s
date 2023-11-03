@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: dev-fastapitest-configmap
-  namespace: dev-fastapitest
-  labels:
-    app: myfastapiapp
-data:
-  env: dev

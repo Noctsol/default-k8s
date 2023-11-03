@@ -1,0 +1,10 @@
+192.168.49.2 fastapi.dev.test tee -a /etc/hosts
+192.168.49.2 fastapi.dev.test tee -a /etc/hosts
+192.168.49.2 fastapi.dev.test tee -a /etc/hosts
+192.168.49.2 fastapi.dev.test tee -a /etc/hosts
+192.168.49.2 fastapi.dev.test tee -a /etc/hosts
+192.168.49.2 fastapi.dev.test tee -a /etc/hosts
+192.168.49.2 fastapi.dev.test tee -a /etc/hosts
+192.168.49.2 fastapi.dev.test tee -a /etc/hosts
+🤷  Profile "minikube" not found. Run "minikube profile list" to view all profiles.
+👉  To start a cluster, run: "minikube start" fastapi.dev.test tee -a /etc/hosts

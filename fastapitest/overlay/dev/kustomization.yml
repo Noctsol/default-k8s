@@ -1,7 +1,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: dev
-namePrefix: dev-
+
+# In general, avoid using this, makes everything a pain in the ass
+# namePrefix: dev-
+
 commonLabels:
   environment: dev
 resources:
@@ -10,11 +13,22 @@ resources:
 patches:
   - path: configmap.yml
   - path: deployment.yml
-  # - ingress.yml
-  # - service.yml
 
-# resources:
-#   - namespace.yml
-#   - configmap.yml
-#   - deployment.yml
-#   - service.yml
+  - patch: |-
+      - op: replace
+        path: ??????????
+        value: fastapi
+        target:
+          kind: Ingress
+          name: default-ingress
+          labelSelector: example-label=rainbow,example-labelz=over
+
+  # https://github.com/kubernetes-sigs/kustomize/blob/master/examples/patchMultipleObjects.md
+  # target:
+  #   group: <optional group>
+  #   version: <optional version>
+  #   kind: <optional kind>
+  #   name: <optional name or regex pattern>
+  #   namespace: <optional namespace>
+  #   labelSelector: <optional label selector>
+  #   annotationSelector: <optional annotation selector>

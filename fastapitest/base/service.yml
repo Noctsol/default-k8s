@@ -1,3 +1,4 @@
+# Internal Service
 kind: Service
 apiVersion: v1
 metadata:
@@ -12,3 +13,13 @@ spec:
   - name:  http
     port:  8001
     targetPort:  8000
+---
+# External Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: dev-fastapitest-service
+  namespace: test-ingress
+spec:
+  type: ExternalName
+  externalName: dev-fastapitest-service.dev.svc.cluster.local

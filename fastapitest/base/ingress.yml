@@ -1,29 +1,30 @@
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: ingress
-#   annotations:
-#     cert-manager.io/cluster-issuer: selfsigned-issuer
-# spec:
-#   rules:
-#     - host: dev.noctsol.test
-#       http:
-#         paths:
-#           - backend:
-#               service:
-#                 name: fastapitest-service
-#                 port:
-#                   number: 8001
-#             path: /
-#             pathType: "Prefix"
-#           # - backend:
-#           #     service:
-#           #       name: fastapitest-service
-#           #       port:
-#           #         number: 443
-#           #   path: /
-#           #   pathType: "Prefix"
-#   # tls:
-#   #   - hosts:
-#   #       - dev.noctsol.test
-#   #     secretName: noctsol-cert-tls
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: default-ingress
+  namespace: test-ingress
+  annotations:
+    nginx.org/proxy-connect-timeout: 3600s
+    nginx.org/proxy-read-timeout: 3600s
+    nginx.org/proxy-send-timeout: 3600s
+  labels:
+    example-label: rainbow
+    example-labelz: over
+spec:
+  ingressClassName: nginx
+  rules:
+    # cat /etc/hosts | grep "$(minikube ip) fastapi"
+
+    - host: fastapi.dev.test
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dev-fastapitest-service
+                port:
+                  number: 8001
+
+
+

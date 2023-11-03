@@ -17,7 +17,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hello-world-app
-  namespace: default
+  namespace: test-ingress
 spec:
   selector:
     matchLabels:
@@ -32,12 +32,19 @@ spec:
           image: gcr.io/google-samples/hello-app:1.0
           ports:
             - containerPort: 8080
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: hello-world-app
-  namespace: kube-system
+  namespace: test-ingress
 spec:
   type: ExternalName
   externalName: hello-world-app.default.svc.cluster.local
@@ -46,7 +53,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: hello-world-app
-  namespace: default
+  namespace: test-ingress
 spec:
   ports:
     - name: http
@@ -63,7 +70,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hello-world-app2
-  namespace: default
+  namespace: test-ingress
 spec:
   selector:
     matchLabels:
@@ -78,13 +85,21 @@ spec:
           image: gcr.io/google-samples/hello-app:1.0
           ports:
             - containerPort: 8080
+              containers:
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
 ---
           
 apiVersion: v1
 kind: Service
 metadata:
   name: hello-world-app2
-  namespace: kube-system
+  namespace: test-ingress
 spec:
   type: ExternalName
   externalName: hello-world-app2.default.svc.cluster.local
@@ -93,7 +108,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: hello-world-app2
-  namespace: default
+  namespace: test-ingress
 spec:
   ports:
     - name: http
@@ -107,16 +122,19 @@ spec:
 
 
 
-
-
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name:  test-ingress
 
 
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: example-ingress
-  namespace: kube-system
+  name: test-ingress
+  namespace: test-ingress
   annotations:
     nginx.org/proxy-connect-timeout: 3600s
     nginx.org/proxy-read-timeout: 3600s
@@ -162,7 +180,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: dev-fastapitest-service
-  namespace: kube-system
+  namespace: test-ingress
 spec:
   type: ExternalName
   externalName: dev-fastapitest-service.dev.svc.cluster.local
