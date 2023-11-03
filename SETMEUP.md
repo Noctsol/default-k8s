@@ -11,7 +11,7 @@ Here's a quick run down and direction(below) on how to set things up.
 ## How to set up Hyper-V VM
 1. Make sure you have a windows license that gives you access to it
 2. Enable it on the features
-3. When you open up thhhe Hyper-V UI, just hit quick create and create the most recent ubuntu version.At this point, you can just walk through the set up and be done. The rest is optional.
+3. When you open up the Hyper-V UI, just hit quick create and create the most recent ubuntu version.At this point, you can just walk through the set up and be done. The rest is optional.
 4. (optional but eventually required) You will only allocate something like ~16GB at the beginning. I increased mine to ~32GB. You can find the link below
 5. (optional) - Move hard drive directory somewhere else. I recommend doing this right away if you want but the vdhx file in a specific SSD/HDD. 
 
