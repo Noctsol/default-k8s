@@ -1,17 +1,13 @@
-# Copyright 2016 The Kubernetes Authors All rights reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+######### TEST NAMESPACE #########
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: test-ingress
 
+
+
+######### DEPLOYMENT HELLO WORLD 1 #########
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -43,11 +39,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-world-app
+  name: hello-world-app-ext
   namespace: test-ingress
 spec:
   type: ExternalName
-  externalName: hello-world-app.default.svc.cluster.local
+  externalName: hello-world-app.test-ingress.svc.cluster.local
 ---
 apiVersion: v1
 kind: Service
@@ -65,7 +61,10 @@ spec:
   selector:
     app: hello-world-app
 
+
+
 ---
+######### DEPLOYMENT HELLO WORLD 2 #########
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -85,7 +84,6 @@ spec:
           image: gcr.io/google-samples/hello-app:1.0
           ports:
             - containerPort: 8080
-              containers:
           resources:
             requests:
               memory: "64Mi"
@@ -94,15 +92,14 @@ spec:
               memory: "128Mi"
               cpu: "500m"
 ---
-          
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-world-app2
+  name: hello-world-app2-ext
   namespace: test-ingress
 spec:
   type: ExternalName
-  externalName: hello-world-app2.default.svc.cluster.local
+  externalName: hello-world-app2.test-ingress.svc.cluster.local
 ---
 apiVersion: v1
 kind: Service
@@ -122,14 +119,9 @@ spec:
 
 
 
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name:  test-ingress
-
 
 ---
+######### TEST INGRESS #########
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -142,7 +134,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: hello.test
+    - host: hello1.test
       http:
         paths:
           - path: /
@@ -162,25 +154,3 @@ spec:
                 name: hello-world-app2
                 port:
                   number: 80
-    - host: fastapi.test
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: dev-fastapitest-service
-                port:
-                  number: 8001
-
-            # pathType: "Prefix"
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: dev-fastapitest-service
-  namespace: test-ingress
-spec:
-  type: ExternalName
-  externalName: dev-fastapitest-service.dev.svc.cluster.local

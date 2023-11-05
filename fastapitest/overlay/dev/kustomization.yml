@@ -16,8 +16,8 @@ patches:
 
   - patch: |-
       - op: replace
-        path: ??????????
-        value: fastapi
+        path: /spec/rules/0/http/paths/0/backend/service/name
+        value: fastapi.dev.test
         target:
           kind: Ingress
           name: default-ingress

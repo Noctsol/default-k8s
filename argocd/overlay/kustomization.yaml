@@ -4,6 +4,10 @@ namespace: argocd
 commonLabels:
   environment: argocd
 resources:
+- ../base_install
 - namespace.yml
-bases:
-  - ../base
+
+
+patches:
+# - path: config_override.yaml
+- path: service_override.yaml

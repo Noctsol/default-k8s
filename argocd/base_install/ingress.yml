@@ -1,0 +1,78 @@
+# For DNS routiung
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: argocd-ext
+  namespace: argocd
+spec:
+  type: ExternalName
+  externalName: argocd-server.argocd.svc.cluster.local
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-argocd
+  labels:
+    name: ingress-argocd
+  annotations:
+    nginx.org/proxy-connect-timeout: 30s
+    nginx.org/proxy-read-timeout: 30s
+    nginx.org/proxy-send-timeout: 30ss
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: argocd.test
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: argocd-server
+            port: 
+              number: 80
+
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: argocd-ingress
+#   namespace: argocd
+#   annotations:
+#     cert-manager.io/cluster-issuer: selfsigned-issuer
+# spec:
+#   rules:
+#     - host: argocd.noctsol.test
+#       http:
+#         paths:
+#           - backend:
+#               service:
+#                 name: argocd-server
+#                 port:
+#                   number: 8000
+#             path: /
+#             pathType: "Prefix"
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: test-ingress
+#   namespace: test-ingress
+#   annotations:
+#     nginx.org/proxy-connect-timeout: 30s
+#     nginx.org/proxy-read-timeout: 30s
+#     nginx.org/proxy-send-timeout: 30ss
+# spec:
+#   ingressClassName: nginx
+#   rules:
+#     - host: hello1.test
+#       http:
+#         paths:
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: hello-world-app
+#                 port:
+#                   number: 80
