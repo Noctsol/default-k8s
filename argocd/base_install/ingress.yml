@@ -18,7 +18,10 @@ metadata:
   annotations:
     nginx.org/proxy-connect-timeout: 30s
     nginx.org/proxy-read-timeout: 30s
-    nginx.org/proxy-send-timeout: 30ss
+    nginx.org/proxy-send-timeout: 30s
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 spec:
   ingressClassName: nginx
   rules:
@@ -31,7 +34,11 @@ spec:
           service:
             name: argocd-server
             port: 
-              number: 80
+              number: 443
+  tls:
+    - hosts:
+        - argocd.test
+      secretName: argocd-server-tls
 
 # ---
 # apiVersion: networking.k8s.io/v1

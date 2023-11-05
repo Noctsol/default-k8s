@@ -9,5 +9,5 @@ resources:
 
 
 patches:
-# - path: config_override.yaml
+- path: config_override.yaml
 - path: service_override.yaml
